@@ -152,7 +152,6 @@ bike_rides_3 %>% ggplot() + geom_area(mapping = aes(x =Weekly, y = Count,fill=ri
  
  # Mutating the column as a factor helps the co;umn graph order according to count
  
- write.csv(bike_rides_1,"C:\\Users\\adity\\OneDrive\\Desktop\\Project Files\\summary_filtered.csv",row.names = FALSE)
  
  
  
