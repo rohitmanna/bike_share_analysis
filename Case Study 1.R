@@ -73,31 +73,7 @@ bike_rides_2 <- bike_rides_1 %>%
   ) %>% 
   ungroup()
 
-  library(ggplot2)
-  
-
-View(bike_rides_2)
-## Summary  station 
-bike_rides_station<- bike_rides_1 %>%
-     group_by(start_station_name) %>% 
-     summarise(
-         minutes = sum(minutes),
-        avg_time = mean(minutes),
-         median_time = median(minutes),
-         max_time = max(minutes),
-         min_time = min(minutes),
-         Count = n()
-      ) %>% 
-     arrange(start_station_name=FALSE) %>% 
-      drop_na()  
-
-
-bike_rides_station
- 
- 
-
-
-## Summary Rideae Type
+  ## Summary Rideable Type
 bike_rides_3<- bike_rides_1 %>%
   group_by(Weekly=floor_date(ymd,"week"),rideable_type, minutes) %>% 
   summarise(
@@ -113,10 +89,12 @@ bike_rides_3<- bike_rides_1 %>%
 
 
 # Plots
+library(ggplot2)
+library(scales)
+options(scipen =999) #Changes The scientific notation (e) to actual numerics
+ 
 
 ## Rides  Per Hour
-
-library(scales)
 bike_rides_2 %>% ggplot() + geom_col(mapping = aes(x =start_hour, y = Count),color = "blue") +
   scale_y_continuous(labels = comma)+
 labs(title="Traffic By The Hours",subtitle="Rides Taken At Diferent Hours of The Day ",x="Hours",y="Rides Per Hour")
@@ -176,7 +154,6 @@ bike_rides_3 %>% ggplot() + geom_area(mapping = aes(x =Weekly, y = Count,fill=ri
  
  write.csv(bike_rides_1,"C:\\Users\\adity\\OneDrive\\Desktop\\Project Files\\summary_filtered.csv",row.names = FALSE)
  
- options(scipen =999) #Changes The scientific notation (e) to actual numerics
  
  
  
