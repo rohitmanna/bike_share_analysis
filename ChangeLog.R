@@ -27,8 +27,7 @@
 ## 11.1. The data on exploration showed null values only on station_id, start_station & end_station variables.
 ## 11.2. All null stations were dropped and counts of the rest are taken into perspective.
 
-## 12. Plots of summary data are created to analyzw rider trends and fulfilll the business task.
+## 12. Plots of summary data are created to analyze rider trends and fulfilll the business task.
 
 
-install_github('rstudio/pagedown')
-install.packages("pagedown")
+
