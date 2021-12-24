@@ -87,8 +87,12 @@ bike_rides_3<- bike_rides_1 %>%
   arrange(ymd=FALSE) %>% 
   ungroup()
 
+#Ride Share Percentage Of Rideable_types
+bike7<- bike_rides %>% 
+  count(rideable_type,sort = TRUE)
 
-# Plots
+
+                                                                      # Plots
 library(ggplot2)
 library(scales)
 options(scipen =999) #Changes The scientific notation (e) to actual numerics
@@ -119,7 +123,7 @@ bike_rides_3 %>% ggplot() + geom_area(mapping = aes(x =Weekly, y = Count,fill=ri
   facet_wrap(~membership_type)
   
   
-# Membership Over Months
+## Membership Over Months
   bike_rides_2 %>% ggplot() + geom_col(mapping = aes(x =Weekly, y = Count,fill=membership_type))+
     labs(title="Count Of Rides By Rider Type ",subtitle=" Ride Trend Of Riders Over 12 Months ",x="Months")
     
@@ -129,9 +133,16 @@ bike_rides_3 %>% ggplot() + geom_area(mapping = aes(x =Weekly, y = Count,fill=ri
    scale_y_continuous(labels = comma)+
    labs(title=" Ride Duration By Rideable Type ",subtitle=" Ride Duration Covered By Bike Types over Months ",x="Months",y="Ride Duration In Minutes", angle=45)+
    facet_wrap(~rideable_type)
+
+## Bike Types & Rider Types 
+ggplot(bike_rides_3,aes(x=Weekly,y=minutes,fill=rideable_type))+
+   geom_area(stat = "identity",position = position_dodge(),alpha=0.75)+
+   scale_y_continuous(labels = comma)+
+   labs(title=" Ride Duration By Rideable Type ",subtitle=" Ride Duration Covered By Bike Types over Months ",x="Months",y="Ride Duration In Minutes", angle=45)+
+   facet_grid(membership_type~rideable_type)
  
  
- # Station Summary & plot
+ ## Station Summary & plot
  bike_rides %>% 
    count(start_station_name,sort = TRUE) %>% 
    drop_na() %>% 
@@ -140,19 +151,6 @@ bike_rides_3 %>% ggplot() + geom_area(mapping = aes(x =Weekly, y = Count,fill=ri
    coord_flip()+
    labs(title="Start Station Traffic Index",subtitle=" The Top 20 Start Stations By Ride Count ",x="Stations",y="Count Of Rides")
 
- 
- # Station Summary Alt Plot ~ Same Result
- bike_rides %>% 
-   count(start_station_name,sort = TRUE) %>% 
-   drop_na() %>% 
-   mutate(start_station_name=factor(start_station_name,levels=start_station_name)) %>% 
-   top_n(20) %>% 
-   ggplot()+geom_col(mapping = aes(x=start_station_name,y=n),color="green")+
-   labs(title="Start Station Traffic Index",subtitle=" The Top 20 Start Stations By Ride Count ",x="Stations",y="Count Of Rides")
- 
- # Mutating the column as a factor helps the co;umn graph order according to count
- 
- 
- 
- 
+
+
  
